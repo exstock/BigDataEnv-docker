@@ -15,12 +15,14 @@ ENV PATH=$PATH:$JAVA_HOME/bin:$SCALA_HOME/bin:$MAVEN_HOME/bin:$SPARK_HOME/bin:$S
 #编译安装spark 2.2.2
 RUN wget -c https://archive.apache.org/dist/spark/spark-2.2.2/spark-2.2.2.tgz && \
     tar -xzvf spark-2.2.2.tgz -C /root/ && \
+    rm -rf spark-2.2.2.tgz
 
 #拷贝spark编译文件
 COPY config/make-config/make-distribution.sh /root/spark-2.2.2/dev/
 COPY config/make-config/pom.xml /root/spark-2.2.2/
 
-RUN cd /root/spark-2.2.2 && \
+RUN yum install -y wget && \
+    cd /root/spark-2.2.2 && \
     ./dev/make-distribution.sh --name spark-22 --tgz -Dhadoop.version=2.7.7 -Phadoop-2.7 -Phive -Phive-thriftserver -Pyarn -PR -Pmesos && \
     tar -zxvf spark-2.2.2-bin-spark-22.tgz && \
     mv /root/spark-2.2.2/spark-2.2.2-bin-spark-22/* $SPARK_HOME && \
@@ -29,7 +31,8 @@ RUN cd /root/spark-2.2.2 && \
     rm -rf $SPARK_HOME/sbin/*.cmd && \
     rm -rf $SPARK_HOME/ec2 && \
     rm -rf $SPARK_HOME/examples && \
-    rm -rf $SPARK_HOME/lib/spark-examples-*
+    rm -rf $SPARK_HOME/lib/spark-examples-* && \
+    yum clean all
 
 #拷贝Spark配置文件
 COPY config/spark/* $SPARK_HOME/conf/

@@ -22,7 +22,8 @@ ENV PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$JAVA_HOME/bin:$MAVEN_HOME/bin
 
 # 1. 安装 OpenSSH, OpenSSL, bzip2-devel
 # 2. 同时配置SSH免密钥登陆
-RUN yum install -y openssh openssh-server openssh-clients openssl openssl-devel bzip2-devel && \
+RUN echo "nameserver 144.144.144.144" >> /etc/resolv.conf && \
+    yum install -y openssh openssh-server openssh-clients openssl openssl-devel bzip2-devel && \
     yum clean all && \
     ssh-keygen -t rsa -f ~/.ssh/id_rsa -P '' && \
     cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
@@ -32,8 +33,8 @@ RUN chmod 600 /root/.ssh/config && \
     chown root:root /root/.ssh/config
 
 #安装maven，编译安装Protocol Buffer, snappy, Hadoop
-RUN yum groupinstall "Development Tools" && \
-    yum groupinstall "Development Libraries" && \
+#yum groupinstall -y "Development Libraries"
+RUN yum groupinstall -y "Development Tools" && \
     yum install -y cmake && \
     yum install -y ant && \
     yum install -y autoconf && \
@@ -50,7 +51,6 @@ RUN yum groupinstall "Development Tools" && \
     yum install -y svn && \
     yum install -y ncurses-devel && \
     yum install -y bzip2 && \
-    yum install -y libbz2-dev && \
     yum install -y bzip2-devel && \
     wget -c http://mirrors.gigenet.com/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz && \
     tar -zxvf apache-maven-3.3.9-bin.tar.gz -C /root/ && \
@@ -67,9 +67,9 @@ RUN yum groupinstall "Development Tools" && \
 	  ./configure && \
     make && make install && \
     rm -rf snappy-1.1.1.tar.gz && \
-    wget https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.7.7/hadoop-2.7.7-src.tar.gz && \
-	  tar -xzvf hadoop-2.7.7.tar.tar.gz -C /root/ && \
-	  cd /root/hadoop-2.7.7 && \
+    wget -c http://mirrors.tuna.tsinghua.edu.cn/apache/hadoop/common/hadoop-2.7.7/hadoop-2.7.7-src.tar.gz && \
+    tar -xzvf hadoop-2.7.7-src.tar.gz -C /root/ && \
+    cd /root/hadoop-2.7.7-src && \
 	  mvn package -Pdist,native -DskipTests -Dtar -Dsnappy.lib=/usr/local/lib -Dbundle.snappy && \
 	  mkdir -p $HADOOP_HOME && \
     mv /root/hadoop-2.7.7/hadoop-dist/target/hadoop-2.7.7/* $HADOOP_HOME && \
@@ -99,5 +99,13 @@ EXPOSE 8088 50070
 #    mkdir -p /works/hadoop/tmp && \
 #    mkdir -p /works/hadoop/logs && \
 #    $HADOOP_HOME/bin/hdfs namenode -format
+
+
+#RUN systemctl disable firewalld && \
+#    systemctl stop firewalld && \
+#    sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config && \
+#    sed -i '$a\net.ipv4.ip_forward=1' /etc/sysctl.conf && \
+#    reboot && \
+
 
 CMD [ "sh", "-c", "systemctl sshd start; bash"]

@@ -9,7 +9,8 @@ ENV HIVE_HOME=/root/hive
 ENV PATH=$PATH:$HIVE_HOME/bin:.
 
 # 安装 Hive
-RUN wget -c http://mirrors.hust.edu.cn/apache/hive/hive-2.3.4/apache-hive-2.3.4-bin.tar.gz && \
+RUN yum install -y wget && \
+    wget -c http://mirrors.hust.edu.cn/apache/hive/hive-2.3.4/apache-hive-2.3.4-bin.tar.gz && \
     tar -xzvf apache-hive-2.3.4-bin.tar.gz -C /root/ && \
     mv /root/apache-hive-2.3.4-bin/* $HIVE_HOME && \
     rm -rf apache-hive-2.3.4-bin.tar.gz && \
@@ -18,7 +19,8 @@ RUN wget -c http://mirrors.hust.edu.cn/apache/hive/hive-2.3.4/apache-hive-2.3.4-
     tar -xzvf mysql-connector-java-5.1.40.tar.gz -C /root/ && \
     mv /root/mysql-connector-java-5.1.40/mysql-connector-java-5.1.40-bin.jar $HIVE_HOME/lib/ && \
     rm -rf /root/mysql-connector-java-5.1.40 && \
-    rm -rf /root/mysql-connector-java-5.1.40.tar.gz
+    rm -rf /root/mysql-connector-java-5.1.40.tar.gz && \
+    yum clean all
 
 
 # 拷贝Hive配置文件

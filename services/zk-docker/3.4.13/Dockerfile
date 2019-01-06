@@ -7,15 +7,18 @@ USER root
 ENV ZOOKEEPER_HOME=/root/zookeeper
 ENV PATH=$PATH:.:$ZOOKEEPER_HOME/bin
 
-# 1. 安装 zookeeper 3.4.8
-RUN wget -c http://mirrors.hust.edu.cn/apache/zookeeper/zookeeper-3.4.13/zookeeper-3.4.13.tar.gz && \
+# 1. 安装 zookeeper 3.4.13
+RUN yum install -y wget && \
+  wget -c http://mirrors.hust.edu.cn/apache/zookeeper/zookeeper-3.4.13/zookeeper-3.4.13.tar.gz && \
 	tar -xzvf zookeeper-3.4.13.tar.gz -C /root/ && \
-  mv /root/zookeeper-3.4.13/* $ZOOKEEPER_HOME && \
+  mkdir -p $ZOOKEEPER_HOME && \
+	mv /root/zookeeper-3.4.13/* $ZOOKEEPER_HOME && \
 	rm -rf zookeeper-3.4.13 && \
 	rm -rf $ZOOKEEPER_HOME/bin/*.cmd && \
 	rm -rf $ZOOKEEPER_HOME/dist-maven && \
 	rm -rf $ZOOKEEPER_HOME/docs && \
-	rm -rf $ZOOKEEPER_HOME/src
+	rm -rf $ZOOKEEPER_HOME/src && \
+	yum clean all 
 
 # 开放2181端口
 EXPOSE 2181
