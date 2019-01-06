@@ -1,0 +1,43 @@
+version: '2'
+services:
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - "./volume/mysql:/var/lib/mysql"
+    container_name: mysql
+    hostname: hadoop-master
+    networks:
+      - spark
+    environment:
+      - MYSQL_ROOT_PASSWORD=hadoop
+    tty: true
+    
+  spark-master:
+    image: exstock/spark:2.2.2
+    ports:
+      - "50070:50070"
+      - "8088:8088"
+      - "8080:8080"
+      - "8042:8042"
+    volumes:
+      - "./volume/works/hadoop/dfs/namenode:/works/hadoop/dfs/namenode"
+      - "./volume/works/hadoop/dfs/datanode:/works/hadoop/dfs/datanode"
+      - "./volume/works/hadoop/dfs/namesecondary:/works/hadoop/dfs/namesecondary"
+      - "./volume/works/hadoop/tmp:/works/hadoop/tmp"
+      - "./volume/works/hadoop/logs:/root/hadoop/logs"
+      - "./volume/works/spark/logs:/root/spark/logs/"
+      - "./volume/works/hive/logs:/root/hive/logs/"
+      - "./volume/works/zookeeper/logs:/root/zookeeper/logs/"
+      - "./volume/code:/code"
+    container_name: spark-master
+    hostname: data-warehouse
+    networks:
+      spark:
+        aliases: 
+          - hadoop-master
+    environment:
+      - ROOT_PASSWORD=hadoop
+    tty: true
+
+networks:
+  spark:

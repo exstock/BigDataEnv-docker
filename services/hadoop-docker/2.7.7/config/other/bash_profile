@@ -1,0 +1,36 @@
+# .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+
+# User specific environment and startup programs
+
+export JAVA_HOME=/usr/lib/jdk8
+export SCALA_HOME=/usr/lib/scala
+export MAVEN_HOME=/root/apache-maven-3.3.9
+export MAVEN_OPTS="-Xmx4g -XX:MaxPermSize=1g -XX:ReservedCodeCacheSize=1g"
+
+export SPARK_HOME=/root/spark
+export KAFKA_HOME=/root/kafka
+export HBASE_HOME=/root/hbase
+export HADOOP_HOME=/root/hadoop
+export HIVE_HOME=/root/hive
+export SQOOP_HOME=/root/sqoop
+export ZOOKEEPER_HOME=/root/zookeeper
+
+export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+export HADOOP_INSTALL=$HADOOP_HOME
+export HADOOP_MAPRED_HOME=$HADOOP_HOME
+export HADOOP_COMMON_HOME=$HADOOP_HOME
+export HADOOP_HDFS_HOME=$HADOOP_HOME
+export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib"
+export HADOOP_YARN_HOME=$HADOOP_HOME
+export LD_LIBRARY_PATH=$HADOOP_HOME/lib/native
+
+#export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+#export HADOOP_ROOT_LOGGER=ERROR,console
+#export HIVE_ROOT_LOGGER=ERROR,console
+
+export PATH=$SPARK_HOME/bin:$SPARK_HOME/sbin:$MAVEN_HOME/bin:$SCALA_HOME/bin:$JAVA_HOME/bin:$ZOOKEEPER_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$HIVE_HOME/bin:$HIVE_HOME/conf:$SQOOP_HOME/bin:$KAFKA_HOME/bin:$KAFKA_HOME/sbin:$HBASE_HOME/bin:$HBASE_HOME/sbin:$PATH

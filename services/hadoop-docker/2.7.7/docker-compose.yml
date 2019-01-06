@@ -1,0 +1,25 @@
+version: '2'
+services:
+  hadoop-master:
+    image: exstock/hadoop:2.7.7
+    container_name: hadoop-master
+    ports:
+      - "50070:50070"
+      - "8088:8088"
+    volumes:
+      - "./volume/works/hadoop/dfs/namenode:/works/hadoop/dfs/namenode"
+      - "./volume/works/hadoop/dfs/datanode:/works/hadoop/dfs/datanode"
+      - "./volume/works/hadoop/dfs/namesecondary:/works/hadoop/dfs/namesecondary"
+      - "./volume/works/hadoop/tmp:/works/hadoop/tmp"
+      - "./volume/works/hadoop/logs:/root/hadoop/logs"
+      - "./volume/code:/code"
+    hostname: data-warehouse   
+    networks:
+      - hadoop
+    environment:
+    	- ROOT_PASSWORD=hadoop
+    tty: true
+
+networks:
+  hadoop:
+  	driver:bridge

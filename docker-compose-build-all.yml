@@ -1,0 +1,21 @@
+version: '2'
+services:
+  os-jvm:
+    build: ./os-jvm-docker/centos7-jdk8
+    image: exstock/os-jvm:centos7-jdk8
+    
+	zookeeper:
+		build: ./zk-docker/3.4.13
+		image: exstock/zookeeper:3.4.13
+		
+  hadoop:
+    build: ./hadoop-docker/2.7.7
+    image: exstock/hadoop:2.7.7
+
+  hive-2.3.4:
+    build: ./hive-docker/2.3.4
+    image: exstock/hive:2.3.4
+
+  spark-2.2.2:
+    build: ./spark-docker/2.2.2
+    image: exstock/spark:2.2.2

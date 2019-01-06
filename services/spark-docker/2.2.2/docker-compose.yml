@@ -1,0 +1,24 @@
+version: '2'
+services:
+  spark-master:
+    image: exstock/spark:2.2.2
+    ports:
+      - "50070:50070"
+      - "8088:8088"
+      - "8080:8080"
+      - "8042:8042"
+    volumes:
+      - "./volume/works/spark/logs:/root/spark/logs/"
+      - "./volume/code:/code"
+    container_name: spark-master
+    hostname: data-warehouse
+    networks:
+      spark:
+        aliases: 
+          - hadoop-master
+    environment:
+      - ROOT_PASSWORD=hadoop
+    tty: true
+
+networks:
+  spark:
