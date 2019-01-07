@@ -25,6 +25,7 @@ RUN yum install -y wget && \
     cd /root/spark-2.2.2 && \
     ./dev/make-distribution.sh --name spark-22 --tgz -Dhadoop.version=2.7.7 -Phadoop-2.7 -Phive -Phive-thriftserver -Pyarn -PR -Pmesos && \
     tar -zxvf spark-2.2.2-bin-spark-22.tgz && \
+    mkdir -p $SPARK_HOME && \
     mv /root/spark-2.2.2/spark-2.2.2-bin-spark-22/* $SPARK_HOME && \
     rm -rf /root/spark-2.2.2 && \
     rm -rf $SPARK_HOME/bin/*.cmd && \
