@@ -12,6 +12,7 @@ ENV PATH=$PATH:$HIVE_HOME/bin:.
 RUN yum install -y wget && \
     wget -c http://mirrors.hust.edu.cn/apache/hive/hive-2.3.4/apache-hive-2.3.4-bin.tar.gz && \
     tar -xzvf apache-hive-2.3.4-bin.tar.gz -C /root/ && \
+    mkdir -p $HIVE_HOME && \
     mv /root/apache-hive-2.3.4-bin/* $HIVE_HOME && \
     rm -rf apache-hive-2.3.4-bin.tar.gz && \
     rm -rf $HIVE_HOME/examples && \

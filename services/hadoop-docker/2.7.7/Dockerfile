@@ -34,7 +34,9 @@ RUN chmod 600 /root/.ssh/config && \
 
 #安装maven，编译安装Protocol Buffer, snappy, Hadoop
 #yum groupinstall -y "Development Libraries"
-RUN yum groupinstall -y "Development Tools" && \
+#sed -i命令会报错sed: cannot rename /etc/sedyRh0SX: Device or resource busy
+RUN echo "nameserver 144.144.144.144" >> /etc/resolv.conf && \
+    yum groupinstall -y "Development Tools" && \
     yum install -y cmake && \
     yum install -y ant && \
     yum install -y autoconf && \
@@ -61,20 +63,20 @@ RUN yum groupinstall -y "Development Tools" && \
     ./configure && \
     make && make install && \
 	  rm -rf protobuf-2.5.0.tar.gz && \
-	  wget -c  https://src.fedoraproject.org/repo/pkgs/snappy/snappy-1.1.1.tar.gz/8887e3b7253b22a31f5486bca3cbc1c2/snappy-1.1.1.tar.gz && \
-	  tar -zxvf snappy-1.1.1.tar.gz -C /root/ && \
-	  cd /root/snappy-1.1.1 && \
+	  wget -c https://github.com/google/snappy/releases/download/1.1.3/snappy-1.1.3.tar.gz && \
+	  tar -zxvf snappy-1.1.3.tar.gz -C /root/ && \
+	  cd /root/snappy-1.1.3 && \
 	  ./configure && \
     make && make install && \
-    rm -rf snappy-1.1.1.tar.gz && \
+    rm -rf snappy-1.1.3.tar.gz && \
     wget -c http://mirrors.tuna.tsinghua.edu.cn/apache/hadoop/common/hadoop-2.7.7/hadoop-2.7.7-src.tar.gz && \
     tar -xzvf hadoop-2.7.7-src.tar.gz -C /root/ && \
     cd /root/hadoop-2.7.7-src && \
 	  mvn package -Pdist,native -DskipTests -Dtar -Dsnappy.lib=/usr/local/lib -Dbundle.snappy && \
 	  mkdir -p $HADOOP_HOME && \
-    mv /root/hadoop-2.7.7/hadoop-dist/target/hadoop-2.7.7/* $HADOOP_HOME && \
+    mv /root/hadoop-2.7.7-src/hadoop-dist/target/hadoop-2.7.7/* $HADOOP_HOME && \
     rm -rf hadoop-2.7.7.tar.gz && \
-    rm -rf /root/hadoop-2.7.7 && \
+    rm -rf /root/hadoop-2.7.7-src && \
     rm -rf $HADOOP_HOME/bin/*.cmd && \
     rm -rf $HADOOP_HOME/sbin/*.cmd && \
     rm -rf $HADOOP_HOME/sbin/*all* && \
