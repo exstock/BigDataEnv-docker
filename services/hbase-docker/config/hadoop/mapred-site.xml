@@ -17,76 +17,110 @@
 <!-- Put site-specific property overrides in this file. -->
 
 <configuration>
-<property>
-<name>mapreduce.jobhistory.address</name>
-<value>0.0.0.0:10020</value> 
-</property>
+<property>  
+            <name>mapreduce.framework.name</name>  
+            <value>yarn</value>  
+            <final>true</final>  
+     </property>  
+    <property>
+                <name>yarn.app.mapreduce.am.resource.mb</name>
+                <value>1024</value>
+    </property>
+    <property>
+                <name>yarn.app.mapreduce.am.command-opts</name>
+                <value>-Xmx1024m</value>
+    </property>    
+    <property>
+                <name>mapreduce.map.memory.mb</name>
+                <value>512</value>
+    </property>          
+    <property>
+                <name>mapreduce.reduce.memory.mb</name>
+                <value>512</value>
+    </property> 
+    <property>
+                 <name>mapreduce.map.java.opts</name>
+                 <value>-Xmx512m</value>
+    </property>             
+    <property>
+                 <name>mapreduce.reduce.java.opts</name>
+                 <value>-Xmx512m</value>
+    </property>                                
+    <property>
+                 <name>mapreduce.task.io.sort.mb</name>
+                 <value>512</value>
+    </property>
+    <property>
+                 <name>yarn.app.mapreduce.am.resource.cpu-vcores</name>
+                 <value>1</value>
+    </property>
+    <property>  
+                 <name>mapreduce.map.cpu.vcores</name>
+                 <value>1</value>
+    </property>
+    <property>
+                 <name>mapreduce.reduce.cpu.vcores</name>
+                 <value>1</value>
+    </property> 
+    <property>
+                 <name>mapreduce.jobtracker.taskscheduler</name>
+                 <value>org.apache.hadoop.mapred.FairScheduler</value>
+    </property>
+    <property>
+                 <name>mapred.queue.names</name>
+                 <value>hadoop</value>
+    </property>
+    <property>
+                 <name>mapreduce.jobtracker.address</name>
+                 <value>data-warehouse:9001</value>
+    </property>
+    <property>
+                 <name>mapreduce.job.jvm.numtasks</name>
+                 <value>-1</value>
+    </property>
+    <property>
+                 <name>mapreduce.job.ubertask.enable</name>
+                 <value>true</value>
+    </property>   
+    <property>
+                 <name>mapreduce.tasktracker.map.tasks.maximum</name>
+	         <value>12</value>
+    </property> 
+    <property>
+                 <name>mapreduce.tasktracker.reduce.tasks.maximum</name>
+                 <value>6</value>
+    </property>
+    <property>
+		<name>mapreduce.jobhistory.address</name>
+		<value>data-warehouse:10020</value>
+    </property>
+    <property>
+		<name>mapreduce.jobhistory.webapp.address</name>
+		<value>data-warehouse:19888</value>
+    </property>
+    <property>
+                 <name>mapreduce.map.output.compress</name>
+                 <value>true</value>
+    </property>
 
-<property>
-<name>mapreduce.jobhistory.webapp.address</name>
-<value>0.0.0.0:19888</value> 
-</property>
-
-<property>
-<name>mapreduce.framework.name</name>
-<value>yarn</value> 
-</property>
- 
-<property>
-<name>mapreduce.job.tracker</name>
-<value>hdfs://hbase-master.hadoop-docker:9001</value>
-<final>true</final>
-</property>
- 
-<property>
-<name>mapreduce.map.memory.mb</name>
-<value>1024</value>
-</property>
- 
-<property>
-<name>mapreduce.map.java.opts</name>
-<value>-Xmx1024M</value>
-</property>
- 
-<property>
-<name>mapreduce.reduce.memory.mb</name>
-<value>1024</value>
-</property>
- 
-<property>
-<name>mapreduce.reduce.java.opts</name>
-<value>-Xmx1024M</value>
-</property>
- 
-<property>
-<name>mapreduce.task.io.sort.mb</name>
-<value>512</value>
-</property>
- 
-<property>
-<name>mapreduce.task.io.sort.factor</name>
-<value>100</value>
-</property>
- 
-<property>
-<name>mapreduce.reduce.shuffle.parallelcopies</name>
-<value>50</value>
-</property>
-
-<property>
-<name>mapreduce.jobtracker.jobhistory.location</name>
-<value>/root/hadoop/logs/history</value>
-</property> 
-
-<property>
-<name>mapred.system.dir</name>
-<value>file:/works/hadoop/mapred/system</value>
-<final>true</final>
-</property>
- 
-<property>
-<name>mapred.local.dir</name>
-<value>file:/works/hadoop/mapred/local</value>
-<final>true</final>
-</property>
+    <property>
+                 <name>mapreduce.map.output.compress.codec</name>
+                 <value>org.apache.hadoop.io.compress.SnappyCodec</value>
+    </property>
+    <property>
+                 <name>mapreduce.output.fileoutputformat.compress</name>
+                 <value>true</value>
+    </property>
+    <property>
+                 <name>mapreduce.output.fileoutputformat.compress.codec</name>
+                 <value>org.apache.hadoop.io.compress.SnappyCodec</value>
+    </property>
+    <property>
+                 <name>mapreduce.map.speculative</name>
+                 <value>false</value>
+    </property>
+    <property>
+                 <name>mapreduce.reduce.speculative</name>
+                 <value>false</value>
+    </property>
 </configuration>

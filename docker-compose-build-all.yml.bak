@@ -19,7 +19,6 @@ services:
   spark-2.2.2:
     build: ./spark-docker/2.2.2
     image: exstock/spark:2.2.2
-    
   hbase-1.2.2:
     build: ./hbase-docker
     image: exstock/hbase:1.2.2

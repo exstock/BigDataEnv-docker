@@ -1,6 +1,6 @@
-FROM twinsen/spark:1.6.2
+FROM exstock/spark:2.2.2
 
-MAINTAINER twinsen <ruoyu-chen@foxmail.com>
+MAINTAINER dongbin <ab19890824@126.com>
 
 USER root
 
@@ -8,13 +8,16 @@ ENV HBASE_HOME=/root/hbase
 ENV PATH=$PATH:.:$HBASE_HOME/bin
 
 # 1. 安装 HBase 1.2.2
-RUN wget https://mirrors.tuna.tsinghua.edu.cn/apache/hbase/1.2.2/hbase-1.2.2-bin.tar.gz && \
+RUN yum install -y wget && \
+  wget -c https://mirrors.tuna.tsinghua.edu.cn/apache/hbase/1.2.2/hbase-1.2.2-bin.tar.gz && \
 	tar -xzvf hbase-1.2.2-bin.tar.gz -C /root/ && \
-    mv /root/hbase-1.2.2 $HBASE_HOME && \
+  mkdir -p $HBASE_HOME && \
+  mv /root/hbase-1.2.2/* $HBASE_HOME && \
 	rm -rf hbase-1.2.2-bin.tar.gz && \
 	rm -rf $HBASE_HOME/bin/*.cmd && \
 	rm -rf $HBASE_HOME/docs && \
-	rm -rf $HBASE_HOME/conf/*.cmd
+	rm -rf $HBASE_HOME/conf/*.cmd && \
+	yum clean all
 	
 
 # 拷贝HBase配置文件

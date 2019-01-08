@@ -13,36 +13,104 @@
   limitations under the License. See accompanying LICENSE file.
 -->
 <configuration>
-
-<!-- Site specific YARN configuration properties -->
 <property>
-<name>yarn.resourcemanager.hostname</name>
-<value>hbase-master.hadoop-docker</value>
+      <name>yarn.resourcemanager.hostname</name>
+      <value>data-warehouse</value>
 </property>
-
+<property>  
+      <name>yarn.resourcemanager.address</name>  
+      <value>data-warehouse:8032</value>  
+</property>
+<property>  
+   <name>yarn.resourcemanager.scheduler.address</name>  
+   <value>data-warehouse:8030</value>  
+</property>
 <property>
-<name>yarn.nodemanager.vmem-check-enabled</name>
-<value>false</value>
+    <name>yarn.resourcemanager.resource-tracker.address</name>  
+    <value>data-warehouse:8031</value>  
 </property>
-
+<property>  
+    <name>yarn.resourcemanager.admin.address</name>  
+    <value>data-warehouse:8033</value>  
+</property>
+<property>  
+   <name>yarn.resourcemanager.webapp.address</name>  
+   <value>data-warehouse:8088</value>  
+</property>
+<property>   
+    <name>yarn.nodemanager.aux-services</name>   
+    <value>mapreduce_shuffle</value>   
+</property>
+<property>   
+    <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>   
+    <value>org.apache.hadoop.mapred.ShuffleHandler</value>   
+</property>
 <property>
-<name>yarn.nodemanager.hostname</name>
-<value>0.0.0.0</value>
+            <name>yarn.resourcemanager.scheduler.class</name>
+            <value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler</value>
 </property>
-
 <property>
-<name>yarn.nodemanager.aux-services</name>
-<value>mapreduce_shuffle</value> 
+            <name>yarn.scheduler.minimum-allocation-mb</name>
+            <value>512</value>
 </property>
- 
 <property>
-<name>yarn.nodemanager.aux-services.mapreduce_shuffle.class</name>
-<value>org.apache.hadoop.mapred.ShuffleHandler</value>
+            <name>yarn.scheduler.maximum-allocation-mb</name>
+            <value>1024</value>
 </property>
-
 <property>
-<name>yarn.resourcemanager.scheduler.class</name>
-<value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler</value>
+            <name>yarn.nodemanager.resource.memory-mb</name>
+            <value>4096</value>
 </property>
-
+<property>
+            <name>yarn.nodemanager.resource.cpu-vcores</name>
+            <value>4</value>
+</property>
+<property>
+            <name>yarn.scheduler.minimum-allocation-vcores</name>
+            <value>1</value>
+</property>
+<property>
+            <name>yarn.scheduler.maximum-allocation-vcores</name>
+            <value>1</value>
+</property>
+<property>
+            <name>yarn.nodemanager.vmem-check-enabled</name>
+            <value>false</value>
+</property>
+<property>
+            <name>yarn.nodemanager.vmem-pmem-ratio</name>
+            <value>2.5</value>
+</property>
+<property>
+            <name>yarn.scheduler.increment-allocation-mb</name>
+            <value>512</value>
+</property>
+<property>
+            <name>yarn.scheduler.increment-allocation-vcores</name>
+            <value>1</value>
+</property>
+<property>
+  	    <name>yarn.log.server.url</name>
+            <value>http://data-warehouse:19888/jobhistory/logs/</value>
+</property>
+<property>    
+  	    <name>yarn.log-aggregation-enable</name>    
+  	    <value>true</value>    
+</property>
+	<property>
+		<name>yarn.application.classpath</name>
+		<value>
+				$HADOOP_CONF_DIR,
+				$HADOOP_COMMON_HOME/share/hadoop/common/*,
+				$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,
+				$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,
+				$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,
+				$HADOOP_YARN_HOME/share/hadoop/yarn/*,
+				$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*
+		</value>
+	</property>
+	<property>
+            <name>yarn.nodemanager.disk-health-checker.max-disk-utilization-per-disk-percentage</name>
+            <value>95.0</value>
+</property>
 </configuration>

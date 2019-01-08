@@ -4,6 +4,8 @@ MAINTAINER exstock <ab19890824@126.com>
 
 USER root
 
+WORKDIR /
+
 #设置环境变量
 ENV JAVA_HOME=/usr/lib/jdk8
 ENV SCALA_HOME=/usr/lib/scala
@@ -22,8 +24,10 @@ COPY config/make-config/make-distribution.sh /root/spark-2.2.2/dev/
 COPY config/make-config/pom.xml /root/spark-2.2.2/
 
 RUN yum install -y wget && \
+    cd /root/spark-2.2.2/dev && \
+    chmod +x make-distribution.sh && \
+    ./make-distribution.sh --name spark-22 --tgz -Dhadoop.version=2.7.7 -Phadoop-2.7 -Phive -Phive-thriftserver -Pyarn -PR -Pmesos && \
     cd /root/spark-2.2.2 && \
-    ./dev/make-distribution.sh --name spark-22 --tgz -Dhadoop.version=2.7.7 -Phadoop-2.7 -Phive -Phive-thriftserver -Pyarn -PR -Pmesos && \
     tar -zxvf spark-2.2.2-bin-spark-22.tgz && \
     mkdir -p $SPARK_HOME && \
     mv /root/spark-2.2.2/spark-2.2.2-bin-spark-22/* $SPARK_HOME && \
