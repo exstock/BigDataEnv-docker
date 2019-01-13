@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   os-jvm:
     build: ./os-jvm-docker/centos7-jdk8

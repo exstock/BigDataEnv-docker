@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   spark-master:
     image: exstock/spark:2.2.2
